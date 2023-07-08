@@ -1,0 +1,94 @@
+#include<iostream>
+#include<math.h>
+#include<Windows.h>
+#include<conio.h>
+#include<ctime>
+using namespace std;
+ 
+enum DIR
+{
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
+};
+ 
+time_t start = 0, finish = 0;
+ 
+int _x = 6, _y = 1;//图形生成位置
+ 
+int map[30][16] = { 0 };
+ 
+int sharp[20][8] = {
+	{0,0,0,0,0,0,0,0},
+	//I形
+	{0,0,0,1,0,2,0,3},
+	{0,0,1,0,2,0,3,0},
+	//■形
+	{0,0,1,0,0,1,1,1},
+	//L形
+	{0,0,0,1,0,2,1,2},
+	{0,0,0,1,1,0,2,0},
+	{0,0,1,0,1,1,1,2},
+	{0,1,1,1,2,0,2,1},
+	//J形
+	{0,2,1,0,1,1,1,2},
+	{0,0,0,1,1,1,2,1},
+	{0,0,0,1,0,2,1,0},
+	{0,0,1,0,2,0,2,1},
+	//Z形
+	{0,0,1,0,1,1,2,1},
+	{0,1,0,2,1,0,1,1},
+	//S形
+	{0,1,1,0,1,1,2,0},
+	{0,0,0,1,1,1,1,2},
+	//T形
+	{0,1,1,0,1,1,2,1},
+	{0,0,0,1,0,2,1,1},
+	{0,0,1,0,1,1,2,0},
+	{0,1,1,0,1,1,1,2}
+};
+ 
+ 
+class Game
+{
+public:
+	int score;//游戏分数
+	int _id;//图形编号
+	int top;//最高点高度
+	int speed;//下落速度
+ 
+	Game();
+	void showMenu();//显示菜单
+	void showGround();//显示游戏界面
+	void gameOver();//游戏结束界面
+	void Run();//运行游戏
+	void sharpDraw(int id, bool show = false);//绘制图形
+	void keyControl();//键盘控制
+	bool move(int dir, int id);//移动判断
+	bool downSet(int id);//下落
+	void Turn(int id);//旋转
+	void clean();//消行
+};
+ 
+void SetPos(int i, int j)//控制光标位置， 列， 行
+{
+	COORD pos = { i,j };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+ 
+int main()
+{
+	CONSOLE_CURSOR_INFO cursor;
+	GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
+	cursor.bVisible = 0;	//这四行用来设置光标不显示
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
+ 
+	srand((unsigned)time(NULL));
+ 
+	Game game;
+	game.showMenu();
+	return 0;
+}
+ 
+Game::Game()
