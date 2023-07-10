@@ -92,3 +92,96 @@ int main()
 }
  
 Game::Game()
+
+{
+	score = 0;
+	_id = 0;
+	top = 58;
+	speed = 1000;
+}
+ 
+void Game::showMenu()
+{
+	for (int i = 0; i < 30; i++)
+	{
+		for (int j = 0; j < 26; j++)
+		{
+			if ((i == 0 || i == 29) || (j == 0 || j == 25))
+			{
+				cout << "■";
+			}
+			else
+			{
+				cout << "  ";
+			}
+		}
+		cout << endl;
+	}
+ 
+	SetPos(17, 8);
+	cout << "俄 罗 斯 方 块" << endl;
+	SetPos(13, 12);
+	cout << "↑旋转方块  ↓加速下滑" << endl;
+	SetPos(12, 14);
+	cout << "← →左右移动  空格  暂停" << endl;
+	SetPos(15, 20);
+	cout << "0 退出  Enter 开始" << endl;
+ 
+	while (1)
+	{
+		int select = _getch();
+		if (select == 13)
+		{
+			system("cls");
+			this->Run();
+		}
+		else if (select = 48)
+		{
+			system("cls");
+			exit(0);
+		}
+	}
+}
+ 
+void Game::showGround()
+{
+	for (int i = 0; i < 30; i++)
+	{
+		for (int j = 0; j < 26; j++)
+		{
+			if ((i == 0 || i == 29) || (j == 0 || j == 25 || j == 15))
+			{
+				cout << "■";
+			}
+			else if (i == 15 && j > 15)
+			{
+				cout << "■";
+			}
+			else
+			{
+				cout << "  ";
+			}
+		}
+		cout << endl;
+	}
+ 
+	SetPos(31, 2);
+	cout << "下 个图形" << endl;
+	SetPos(31, 17);
+	cout << "当 前得分" << endl;
+ 
+	for (int i = 0; i < 30; i++)
+	{
+		for (int j = 0; j < 16; j++)
+		{
+			if ((i == 0 || i == 29) || (j == 0 || j == 15))
+			{
+				map[i][j] = 1;
+			}
+			else
+			{
+				map[i][j] = 0;
+			}
+		}
+	}
+}
